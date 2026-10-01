@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heatline – See where attention goes</title>
+<meta name="description" content="A lightweight JavaScript usability tracker with live click, movement and scroll heatmaps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="hero" id="hero">
+  <canvas id="trail" aria-hidden="true"></canvas>
+  <nav class="nav">
+    <a class="brand" href="#hero"><span class="brand-dot"></span>Heatline</a>
+    <div class="nav-links"><a href="#bench">Test bench</a><a href="#session">Live session</a></div>
+  </nav>
+  <div class="hero-copy">
+    <h1>Every move you make leaves a trace.</h1>
+    <p>Heatline records clicks, cursor paths and scroll depth in your browser, then paints them back as a heatmap. Move your mouse here, then scroll down and click around.</p>
+    <button class="btn btn-heat" data-show="move">Show my cursor heatmap</button>
+  </div>
+  <div class="hero-meter" aria-live="polite"><strong id="heroMoves">0</strong> movement samples captured</div>
+</header>
+
+<main>
+  <section class="bench" id="bench">
+    <div class="wrap">
+      <h2>Test bench</h2>
+      <p class="lede">A small sign-up flow with a few deliberate usability problems. Use it normally, then check the heatmap to see where people hesitate, miss, or give up.</p>
+
+      <div class="plans">
+        <article class="plan">
+          <h3>Starter</h3><p class="price">Free</p>
+          <p>One project, 1,000 recorded events a day.</p>
+          <button class="btn btn-ghost">Choose Starter</button>
+        </article>
+        <article class="plan plan-main">
+          <h3>Team</h3><p class="price">$12<span>/month</span></p>
+          <p>Unlimited projects, CSV and JSON export, shared sessions.</p>
+          <button class="btn btn-heat">Choose Team</button>
+        </article>
+        <article class="plan">
+          <h3>Campus</h3><p class="price">$40<span>/month</span></p>
+          <p>For labs and classrooms. Includes research exports.</p>
+          <button class="btn btn-ghost">Choose Campus</button>
+        </article>
+      </div>
+
+      <div class="signup">
+        <div>
+          <h3>Create your account</h3>
+          <p>Notice how small the skip link is. Try to hit it quickly.</p>
+        </div>
+        <div class="signup-form">
+          <label for="email">Email address</label>
+          <input id="email" type="email" placeholder="you@university.edu">
+          <div class="signup-actions">
+            <button class="btn btn-dark" id="createBtn">Create account</button>
+            <a href="#session" class="tiny-link">skip</a>
+          </div>
+          <p class="hint" id="createHint">Nothing is sent anywhere. Data stays in this tab.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="session" id="session">
+    <div class="wrap">
+      <h2>Live session</h2>
+      <p class="lede">Everything below updates as you use this page.</p>
+
+      <div class="stats">
+        <div class="stat"><span class="stat-n" id="sClicks">0</span><span class="stat-l">Clicks</span></div>
+        <div class="stat"><span class="stat-n" id="sMoves">0</span><span class="stat-l">Cursor samples</span></div>
+        <div class="stat"><span class="stat-n" id="sScroll">0%</span><span class="stat-l">Deepest scroll</span></div>
+        <div class="stat"><span class="stat-n" id="sRage">0</span><span class="stat-l">Rage clicks</span></div>
+        <div class="stat"><span class="stat-n" id="sTime">0:00</span><span class="stat-l">Time on page</span></div>
+      </div>
+
+      <div class="panels">
+        <div class="panel">
+          <h3>Most clicked elements</h3>
+          <ol class="targets" id="targets"><li class="empty">No clicks yet. Click anything on the page.</li></ol>
+        </div>
+        <div class="panel">
+          <h3>Event stream</h3>
+          <ul class="stream" id="stream"><li class="empty">Waiting for activity.</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Heatline – lab project built with plain HTML, CSS and JavaScript.</span>
+    <span id="sid"></span>
+  </div>
+</footer>
+
+<div class="dock" data-tracker-ignore role="toolbar" aria-label="Heatmap controls">
+  <div class="seg" role="group" aria-label="Heatmap type">
+    <button data-show="click">Clicks</button>
+    <button data-show="move">Movement</button>
+    <button data-show="scroll">Scroll</button>
+    <button data-show="off" class="on">Off</button>
+  </div>
+  <span class="dock-sep"></span>
+  <button class="dock-btn" id="expJson">Download JSON</button>
+  <button class="dock-btn" id="expCsv">Download CSV</button>
+  <button class="dock-btn" id="reset">Reset</button>
+</div>
+<div class="toast" id="toast" role="status" data-tracker-ignore></div>
+
+<script src="js/tracker.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
